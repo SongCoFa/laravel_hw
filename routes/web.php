@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => 'web'], function () {
+    Route::get('/', 'HomeController@getIndex')->name('home');
+    Route::get('messages', 'HomeController@getMessages')->name('messages');
+    Route::post('post_messages', 'HomeController@postMessages')->name('post_messages');
 });
