@@ -13,5 +13,8 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
+        'post_messages',
+        'update_messages',
+        'delete_messages',
     ];
 }

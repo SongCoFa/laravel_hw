@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +16,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => 'web'], function () {
-    Route::get('/', 'HomeController@getIndex')->name('home');
-    Route::get('messages', 'HomeController@getMessages')->name('messages');
-    Route::post('post_messages', 'HomeController@postMessages')->name('post_messages');
+    Route::get('/', [HomeController::class, 'getIndex'])->name('home');
+    Route::get('messages', [HomeController::class, 'getMessages'])->name('messages');
+    Route::post('post_messages', [HomeController::class, 'postMessages'])->name('post_messages');
+    Route::post('update_messages', [HomeController::class, 'updateMessages'])->name('update_messages');
+    Route::post('delete_messages', [HomeController::class, 'deleteMessages'])->name('delete_messages');
+    // Route::post('post_messages', [MemberController::class, 'postMessages'])->name('post_messages');
 });
