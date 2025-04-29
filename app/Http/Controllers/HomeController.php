@@ -9,8 +9,23 @@ class HomeController extends Controller
 {
     public function getIndex()
     {
-        $data=[];
+        $data = [];
+        $messages = Message::paginate(10);
+        $data = [
+            'messages' => $messages->items(),
+            'pagination' => [
+                'total' => $messages->total(),
+                'per_page' => $messages->perPage(),
+                'current_page' => $messages->currentPage(),
+                'last_page' => $messages->lastPage(),
+                'next_page_url' => $messages->nextPageUrl(),
+                'prev_page_url' => $messages->previousPageUrl(),
+            ],
+        ];
         return view('welcome', $data);
+
+        // $data=[];
+        // return view('welcome', $data);
     }
 
     // 取得留言列表
@@ -23,14 +38,19 @@ class HomeController extends Controller
     // 新增一筆留言
     public function postMessages(Request $request)
     {
-        $validated = $request->validate([
-            'username_from' => 'required|string|max:255',
-            'username_to' => 'required|string',
-            'userid_to' => 'required|alpha_num',
-            'userid_from' => 'required|alpha_num',
-            'title' => 'required|string',
-            'content' => 'required|string',
-        ]);
+        $max = 25;
+        $min = 1;
+
+        $rules = [
+            'username_from' => ['required', 'string', 'max:' . $max, 'min:'. $min],
+            'username_to' => ['required', 'string', 'max:' . $max],
+            'userid_to' => ['required', 'alpha_num', 'max:' . $max],
+            'userid_from' => ['required', 'alpha_num', 'max:' . $max, 'min:'. $min],
+            'title' => ['required', 'string'],
+            'content' => ['required', 'string'],
+        ];
+
+        $validated = $request->validate($rules);
 
         $message = Message::create($validated);
 
