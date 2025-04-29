@@ -29,10 +29,29 @@ class HomeController extends Controller
     }
 
     // 取得留言列表
-    public function getMessages()
+    public function getMessages(Request $request)
     {
-        $messages = Message::all(); // 取得所有留言
-        return response()->json($messages);
+        //$messages = Message::all(); // 取得所有留言
+
+        $data = [];
+        $perPage = 10;
+        $page = request()->query('mypage');
+        Paginator::currentPageResolver(function () use ($page) {
+            return $page;
+        });
+        $messages = Message::orderBy('created_at', 'desc')->paginate($perPage);
+        $data = [
+            'messages' => $messages->items(),
+            'pagination' => [
+                'total' => $messages->total(),
+                'per_page' => $messages->perPage(),
+                'current_page' => $messages->currentPage(),
+                'last_page' => $messages->lastPage(),
+                'next_page_url' => $messages->nextPageUrl(),
+                'prev_page_url' => $messages->previousPageUrl(),
+            ],
+        ];
+        return response()->json($data);
     }
 
     // 新增一筆留言
