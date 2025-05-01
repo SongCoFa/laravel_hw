@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MemberController;
 
 /*
@@ -22,4 +23,16 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('update_messages', [HomeController::class, 'updateMessages'])->name('update_messages');
     Route::post('delete_messages', [HomeController::class, 'deleteMessages'])->name('delete_messages');
     // Route::post('post_messages', [MemberController::class, 'postMessages'])->name('post_messages');
+
+    Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('login', [AuthController::class, 'login']);
+    Route::get('register', [AuthController::class, 'showRegisterForm'])->name('register');
+    Route::post('register', [AuthController::class, 'register']);
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return '登入成功才能看到的頁面';
+    });
 });
