@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>Register</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -403,59 +403,26 @@
         }
     </style>
 </head>
-
 <body class="antialiased">
-    <div
-        class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0" style="flex-direction: column;">
-        @if (Route::has('login'))
-            <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                @auth
-                    <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
-                @else
-                    <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
-
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}"
-                            class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-                    @endif
-                @endauth
-            </div>
-        @endif
-
-        @if (Auth::check())
-            <h5>已登入</h5>
-        @else
-            <h5>未登入</h5>
-        @endif
-
-        <h1>留言列表</h1>
-
+    <div id="register-form">
         <ul>
-            @foreach ($messages as $message)
-                <li>
-                    <strong>{{ $message->username_from }}</strong>: {{ $message->title }}<strong>，</strong>{{ $message->content }}
-                </li>
-            @endforeach
+            <li>
+                <span>Name</span>
+                <input type="text" placeholder="Name" data-id="name">
+            </li>
+            <li>
+                <span>Password</span>
+                <input type="text" placeholder="Password" data-id="password">
+            </li>
+            <li>
+                <span>E-mail</span>
+                <input type="text" placeholder="E-mail" data-id="email">
+            </li>
+            <button id="register-btn">Register</button>
         </ul>
-
-        {{-- 分頁連結 --}}
-        <div class="pagination">
-            @if ($pagination['prev_page_url'])
-                <a href="{{ $pagination['prev_page_url'] }}">上一頁</a>
-            @endif
-
-            <span>第 {{ $pagination['current_page'] }} 頁 / 共 {{ $pagination['last_page'] }} 頁</span>
-
-            @if ($pagination['next_page_url'])
-                <a href="{{ $pagination['next_page_url'] }}">下一頁</a>
-            @endif
-        </div>
     </div>
 
     <script src="{{ asset('script/axios.min.js') }}"></script>
-    <script>
-
-    </script>
+    <script src="{{ asset('script/js/auth.js') }}"></script>
 </body>
-
 </html>

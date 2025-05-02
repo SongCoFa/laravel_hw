@@ -25,9 +25,9 @@ Route::group(['middleware' => 'web'], function () {
     // Route::post('post_messages', [MemberController::class, 'postMessages'])->name('post_messages');
 
     Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('login', [AuthController::class, 'login']);
+    Route::post('post_login', [AuthController::class, 'postLogin'])->name('post_login');
     Route::get('register', [AuthController::class, 'showRegisterForm'])->name('register');
-    Route::post('register', [AuthController::class, 'register']);
+    Route::post('post_register', [AuthController::class, 'postRegister'])->name('post_register');
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 });
 

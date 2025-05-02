@@ -16,5 +16,7 @@ class VerifyCsrfToken extends Middleware
         'post_messages',
         'update_messages',
         'delete_messages',
+        'post_register',
+        'post_login',
     ];
 }
