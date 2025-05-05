@@ -47,14 +47,16 @@ class AuthController extends Controller
         $credentials = $request->only('name', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect('/');
+            return redirect(route('home'));
         }
 
         return back()->withErrors(['password' => '帳號或密碼錯誤']);
     }
 
-    public function logout() {
+    public function logout(Request $request) {
+        $request->session()->getHandler()->destroy($request->session()->getId());
         Auth::logout();
-        return redirect('/');
+        $request->session()->regenerate(true);
+        return redirect(route('home'));
     }
 }
